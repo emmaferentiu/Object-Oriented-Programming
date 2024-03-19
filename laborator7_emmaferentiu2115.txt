@@ -1,0 +1,324 @@
+//Modificaţi exemplul 3 astfel încât să permită obtinerea unui nou punct, avand coordonatele
+//obtinute prin adunarea coordonatelor a două astfel de puncte.Numele noului punct va fi
+//rezultat prin concatenarea numelor celor două puncte.Adaugati si testati o metoda care
+//calculeaza distanta de la un punct la origine.Modificați clasa astfel încât sa eliminați metoda
+//afis() folosind in schimb metode accesor adecvate.Eliminați de asemenea atributul
+//lungime_sir modificând adecvat metodele clasei.Adaugati si un move constructor.Testati
+//utilizand si functii specifice sirurilor de caractere din VC++1y / 2z(strcpy_s() si strcat_s()).
+//FERENTIUU EMMA-LUCIANA 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+using namespace std;
+const int dim_sir = 21;
+class CPunctText {
+        int x;
+        int y;
+        
+        char* sNume;
+public:
+        //constructor explicit vid
+        CPunctText();
+        //constructor cu parametri
+        CPunctText(int ix, int iy, const char* sText = "Punctul");
+        //constructor de copiere
+        CPunctText(const CPunctText& pct);
+        //destructor:
+        ~CPunctText();
+        CPunctText concatenare(CPunctText punct)
+        {
+                int lungime = strlen(sNume) + strlen(punct.sNume) + 1;
+                char* s = new char[lungime];
+                strcpy(s, sNume);
+                strcat(s, punct.sNume);
+                return CPunctText(x + punct.x, y + punct.y, s);
+        }
+        float distanta()
+        {
+                return sqrt(x * x + y * y);
+        }
+        int getX()
+        {
+                return x;
+        }
+        int getY()
+        {
+                return y;
+        }
+
+        char* getNume()
+        {
+                return sNume;
+        }
+};
+CPunctText::CPunctText() {
+        cout << "\n constructor explicit vid";
+        x = y = 0;
+        
+        sNume = new (std::nothrow) char[dim_sir];
+        strcpy(sNume, "Veronica");
+}
+CPunctText::CPunctText(int ix, int iy, const char* sText) {
+        cout << "\n constructor cu parametri";
+        
+        sNume = new (std::nothrow) char[dim_sir];
+        x = ix;
+        y = iy;
+        strcpy(sNume, sText);
+}
+CPunctText::CPunctText(const CPunctText& pct) {
+        cout << "\n constructor de copiere";
+        sNume = new (std::nothrow) char[dim_sir];
+        x = pct.x;
+        y = pct.y;
+        strcpy(sNume, pct.sNume);
+}
+CPunctText::~CPunctText() {
+        cout << "\n\tDestructor";
+        delete[] sNume;
+}
+//main
+void afisare(CPunctText x);
+int main() {
+
+        CPunctText unu(1, 2, "Punct1");//apel constructor cu parametri
+        CPunctText doi(1, 2); //apel constructor cu parametri ultimul fix
+        
+        afisare(unu);
+        
+        afisare(doi);
+        
+        CPunctText trei = unu.concatenare(doi);
+        afisare(trei);
+        cout << "\nDistanta de la origine"  << trei.distanta();
+
+}
+void afisare(CPunctText x)
+
+{
+
+
+        cout << "\nOb are numele " << x.getNume();
+        cout << "\nOb x= " << x.getX();
+        cout << "\nOb y= " << x.getY();
+
+}
+......................................................................................................
+//2. Să se scrie o aplicaţie C / C++ care să modeleze obiectual un tablou unidimensional de numere
+//reale.Creaţi două instanţe ale clasei şi afișați valorile unui al 3 - lea tablou, obținute prin
+//scăderea elementelelor corespunzătoare din primele 2 tablouri.Dacă tablourile au lungimi
+//diferite, tabloul rezultat va avea lungimea tabloului cel mai scurt.
+//FERENTIU EMMA-LUCIANA
+class Numerereale {
+
+        double x;
+public:
+        
+      
+        double getNumerereale()
+        {
+                return x;
+        }
+        void setNumerereale(double y)
+        {
+                x = y;
+        }
+
+        Numerereale scadere(Numerereale y)
+        {
+                Numerereale c;
+                c.setNumerereale(x - y.x);
+                return c;
+
+        }
+};
+#include <iostream>
+using namespace std;
+
+int main()
+{
+        int m, n, i;
+        double x;
+        Numerereale av[100], bv[100], cv[100];
+        cout << "dati lungimea primului tablou";
+        cin >> m;
+        cout << "introduceti elementele";
+        for (i = 0; i < m; i++)
+        {
+                cin >> x;
+                av[i].setNumerereale(x);
+        }
+            
+        cout << "dati lungimea celui de-al doilea tablou";
+        cin >> n;
+        cout << "introduceti elementele";
+        for (i = 0; i < n; i++)
+        {
+                cin >> x;
+                bv[i].setNumerereale(x);
+        }
+        Numerereale c[100];
+        if (m > n)
+                m = n;
+        for (int i = 0; i < m; i++)
+        {
+                cv[i]=av[i].scadere(bv[i]);
+                cout << cv[i].getNumerereale()<< " ";
+        }
+}
+..............................................................................
+//3. Modelați clasa Student care să conțină atributele private nume, prenume, note(tablou 7 valori
+//        int), grupa.Alocați dinamic memorie pentru n studenți.Calculați media cu o metoda din clasa
+//        și sortați studenții după medie, afisând datele fiecărui student(nume, prenume, grupa, medie).
+        //Implementati si destructorul clasei care să afișeze un mesaj.
+//FERENTIU EMMA-LUCIANA
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <time.h>
+using namespace std;
+
+class Student {
+
+        char Nume[10];
+        char Prenume[10];
+        int Note[7];
+        int Grupa;
+
+public:
+        Student( int iy, const char* sText, const char* sText2);
+        Student(const Student& pct);
+        int medie() {
+                int s = 0;
+                for (int i = 0; i < 7; i++)
+                        s += Note[i];
+                s = s / 7;
+                return s;
+        }
+        void afis()
+        {
+                cout << Nume <<" " << Prenume;
+                cout << "media este "<< medie();
+                 }
+};
+        Student::Student(int iy, const char* sText, const char* sText2) {
+                int i;
+                int random;
+                for (i = 0; i < 7; i++)
+                {
+                        Note[i] = rand() % 11;
+                }
+                Grupa = iy;        
+                strcpy(Nume, sText);
+                strcpy(Prenume, sText2);
+
+        }
+        Student::Student(const Student& pct) {
+                cout << "\n constructor de copiere\n";
+                int i;
+
+                for (i = 0; i < 7; i++)
+                {
+                        Note[i] = pct.Note[i];
+                }
+                Grupa = pct.Grupa;
+                strcpy(Nume, pct.Nume);
+                strcpy(Prenume, pct.Prenume);
+        }
+
+
+
+
+        
+        int main()
+        {
+                srand(time(NULL));
+                Student* stud;
+                Student* aux;
+                int i, j;
+                int n = 4;
+                stud = ((Student*)malloc(n * sizeof(Student)));
+                 Student student1( 5, "tatar", "ana");
+                Student student2( 5, "pop", "anca");
+                Student student3( 5, "t", "paula");
+                if (student2.medie() > student1.medie() && student2.medie() > student3.medie())
+                         Student student1 = student2;
+                if (student3.medie() > student2.medie() && student3.medie() > student1.medie())
+                        Student student1 = student2;
+                cout << "studentul cu cea mai mare medie" << " ";
+                student1.afis();
+                
+
+                        
+
+}
+.....................................................
+//5. Să se scrie o aplicaţie C / C++ în care se citeşte de la tastatură un punct prin coordonatele x, y,
+//z.Să se scrie o metodă prin care să se facă translaţia punctului cu o anumită distanţă pe fiecare
+//dintre cele trei axe.Să se verifice dacă dreapta care uneşte primul punct şi cel rezultat în urma
+//translaţiei trec printr - un al treilea punct dat de la consolă.
+//FERENTIU EMMA-LUCIANA
+#include <iostream>
+using namespace std;
+class Punct {
+
+        int x;
+        int y;
+        int z; 
+
+public:
+        Punct(int a, int b, int c)
+        {
+                x = a;
+                y = b;
+                z = c;
+        }
+        int getX()
+        {
+                return x;
+
+        }
+        int getY()
+        {
+                return y;
+
+        }
+        int getZ()
+        {
+                return z;
+
+        }
+        void translatie()
+        {
+                z = z + 1;
+                y = y + 1;
+                z = z + 1;
+                
+        }
+     Punct(const Punct& pct);
+        
+};
+Punct::Punct(const Punct& pct) {
+        cout << "\n constructor de copiere\n";
+        x = pct.x;
+        y = pct.y;
+        z = pct.z;
+}
+
+
+int main()
+{
+        
+        int a, b, c;
+        cout << "introduceti coordonatele unui punct";
+        cin >> a >> b >> c;
+        Punct unu(a, b, c);
+        Punct doi(unu);
+        unu.translatie();
+        cout << "introduceti coordonatele unui punct";
+        cin >> a >> b >> c;
+        Punct trei(a, b, c);
+        if (unu.getX() == trei.getX() || doi.getX() == trei.getX() || unu.getY() == trei.getY() || doi.getY() == trei.getY())
+                cout << "punctele au o axa comuna";
+        else
+                cout << "punctele nu au o axa comuna";
+}
+}

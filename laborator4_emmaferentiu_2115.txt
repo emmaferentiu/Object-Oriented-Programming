@@ -1,0 +1,519 @@
+//Generati printr - un mecanism aleatoriu un tablou de maxim 200 de valori reale(prin doua tablouri de aceiaşi
+ //   dimensiune, primul fiind partea intreaga(nu mai mare de 100), al doilea partea fractionara(limitata la 20 ca
+   //     intreg ce devine .20 fractionar), tabloul real fiind obtinut prin combinarea partii intregi şi fractionare.Afişati
+   // tablourile generate, cel real obtinut.
+
+//FERENTIU EMMA-LUCIANA 2115
+#include    <iostream>
+using namespace std;
+#include <iostream>
+using namespace std;
+#include <time.h>
+int comparare(const void* aa, const void* bb);
+int main()
+{
+    srand(time(NULL));
+
+    int intreaga[200], fractionara[200], s = 0, n;
+    double real[200];
+    n = rand() % 200;
+    for (int i = 0; i < n; i++)
+    {
+        intreaga[i] = rand() % 101;
+        fractionara[i] = rand() % 21;
+        real[i] = intreaga[i]+double(fractionara[i] * 0.1);
+        
+    }
+    qsort(real, n, sizeof(double), comparare);
+    
+    for (int i = 0; i < n; i++)
+    {
+        cout << real[i] << " ";
+    }
+
+}
+
+        int comparare(const void* aa, const void* bb)
+        {
+            double* a = (double*)aa;
+            double* b = (double*)bb;
+            if ((*a) > (*b)) return 1;
+            else
+                return -1;
+        }
+............................................................................................................................
+//Modificaţi programul care exemplifică metoda de sortare rapidă explicita(Quick - Sort) aşa încât să ordoneze
+//şirul iniţial în ordine descrescătoare
+//EMMA LUCIANA FERENTIU 2115
+#include <iostream>
+using namespace std;
+#include <time.h>
+void QuickSortdescrescator(int v[], int st, int dr);
+int main()
+{
+        int n, i, a[100];
+        cout << "numarul de numere din vector";
+        cin >> n;
+        cout << "introduceti numerele";
+        for (i = 0; i < n; i++)
+                cin >> a[i];
+        QuickSortdescrescator(a, 0, n - 1);
+        cout << "numerele sortate";
+        for (i = 0; i < n; i++)
+                cout << a[i] << " ";
+
+
+}
+void QuickSortdescrescator(int v[], int st, int dr)
+{
+        if (st < dr)
+        {
+                int m = (st + dr) / 2;
+                int aux = v[st];
+                v[st] = v[m];
+                v[m] = aux;
+                int i = st, j = dr, d = 0;
+                while (i < j)
+                {
+                        if (v[i] < v[j])
+                        {
+                                aux = v[i];
+                                v[i] = v[j];
+                                v[j] = aux;
+                                d = 1 - d;
+                        }
+                        i += d;
+                        j -= 1 - d;
+                }
+                QuickSortdescrescator(v, st, i - 1);
+                QuickSortdescrescator(v, i + 1, dr);
+        }
+}
+...................................................................................................
+//3. Folosiţi funcţiile de bibliotecă pentru sortări(qsort()) pentru a aranja un tablou unidimensional de înregistrări
+//cu nume, prenume, cod numeric personal, data angajării după două câmpuri la alegere
+//EMMA LUCIANA FERENTIU 2115
+#include <iostream>
+using namespace std;
+#include <time.h>
+struct Data {
+        int an;
+        int luna;
+        int zi;
+};
+struct Persoane {
+        char numeprenume[16];
+        struct Data datangajarii;
+        int codnumericpersonal;
+};
+int compararenume(const void* aa, const void* bb);
+int compararedata(const void* aa, const void* bb);
+int main()
+{
+        struct Persoane angajati[] = {
+ {"a", {1999, 7,18},{37483}},
+ {"c", {1968, 7, 8},{84848}},
+ {"e", {2001, 5, 29},{34343}},
+ {"b", {1963, 11, 30},{65656}},
+ {"d", {1982, 2, 13},{45646}}
+        };
+        qsort(angajati, 5, sizeof(angajati[0]), compararedata);
+        int i;
+        cout << "angajatii aranjati dupa data nasterii:";
+                for (i = 0; i < 5; i++)
+                        cout << angajati[i].numeprenume <<" "<< angajati[i].datangajarii.an << " " << angajati[i].datangajarii.luna << " " <<
+                        angajati[i].datangajarii.zi << " " << angajati[i].codnumericpersonal << "\n";
+        qsort(angajati, 5, sizeof(angajati[0]), compararenume);
+        cout << "angajati sortati dupa nume:";
+                for (i = 0; i < 5; i++)
+                        cout << angajati[i].numeprenume << " " << angajati[i].datangajarii.an << " " << angajati[i].datangajarii.luna << " " <<
+                        angajati[i].datangajarii.zi << " " << angajati[i].codnumericpersonal << "\n";
+
+                
+}
+int compararedata(const void* aa, const void* bb)
+{
+        Persoane* a = (Persoane*)aa;
+        Persoane* b = (Persoane*)bb;
+        if ((a->datangajarii).an > (b->datangajarii).an) return 1;
+        else
+                if ((a->datangajarii).an < (b->datangajarii.an)) return -1;
+                else {
+                        if ((a->datangajarii).luna > (b->datangajarii).luna) return 1;
+                        else if ((a->datangajarii).luna < (b->datangajarii).luna) return -1;
+                        else {
+                                if ((a->datangajarii).zi > (b->datangajarii).zi)
+                                        return 1;
+                                else if ((a->datangajarii).zi < (b->datangajarii).zi)
+                                        return -1;
+                                return 0;
+                        }
+                }
+}
+int compararenume(const void* aa, const void* bb)
+{
+        Persoane* a = (Persoane*)aa;
+        Persoane* b = (Persoane*)bb;
+        if ((strcmp(a->numeprenume, b->numeprenume) > 0)) return 1;
+        else if ((strcmp(a->numeprenume, b->numeprenume) < 0)) return -1;
+}
+............................................................
+//4. Scrieţi o aplicaţie C / C++ in care plecând de la două tablouri(unidimensionale) de numere naturale să se obţină
+//un al treilea tablou care să conţină toate elementele tablourilor sursă fără a se repeta, aranjate în ordine
+//crescătoare.
+//FERENTIU EMMA-LUCIANA 2115
+#include    <iostream>
+using namespace std;
+void sortarecrescator(int V[100], int n);
+void interclasare(int a[100], int b[100], int c[100], int n, int m, int& k);
+int main()
+{
+    int a[100], b[100], c[200];
+    int n, m, k = -1;
+    cout << "Introduceti numarul de elemente corespunzator vectorului A: "; cin >> n;
+    cout << "Introduceti elementele vectorului A: ";
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+    cout << "Introduceti numarul de elemente corespunzator vectorului B: "; cin >> m;
+    cout << "Introduceti elementele vectorului B: ";
+    for (int i = 0; i < m; i++)
+        cin >> b[i];
+     sortarecrescator(a, n);
+     sortarecrescator(b, m);
+     interclasare(a, b, c, n, m, k);
+
+
+int d;
+    for (d = 0; d <= k; d++)
+        cout << c[d];
+    return 0;
+}
+void sortarecrescator(int V[100],int n )
+{
+    int i, j, schimb;
+    for (i = 0; i <= n - 2; i++)
+    {
+        for (j = i + 1; j <= n - 1; j++)
+        {
+            if (V[i] > V[j])
+            {
+                schimb = V[i];
+                V[i] = V[j];
+                V[j] = schimb;
+            }
+        }
+
+    }
+}
+void interclasare(int a[100],int b[100], int c[100], int n, int m, int&k)
+{
+    int i = 0;
+
+
+    int j = 0;
+
+    while (i < n && j < m)
+    {
+        while (a[i] == a[i + 1]) //verificam daca exista elemente egale in acelasi vector
+            i++;
+        while (b[j] == b[j + 1])
+            j++;
+
+        if (a[i] < b[j])
+
+
+        {
+            k++;
+
+
+            c[k] = a[i];
+
+
+            i++;
+
+
+        }
+
+
+        else
+
+
+            if (a[i] == b[j])
+
+
+            {
+                k++;
+
+                c[k] = a[i];
+
+
+                i++; j++;
+
+
+            }
+
+
+            else
+
+
+            {
+                k++;
+
+
+                c[k] = b[j];
+
+
+                j++;
+
+
+            }
+    }
+
+    if (i < n)
+
+
+        for (j = i; j < n; j++)
+
+
+        {
+            k++;
+
+
+            c[k] = a[j];
+
+
+        }
+
+
+    else
+
+
+        for (i = j; i < m; i++)
+
+
+        {
+            k++;
+
+
+            c[k] = b[i];
+
+
+        }
+}
+............................................................................................
+//Cititi de la tastatura m elemente de tip intreg intr - un tablou unidimensional si o valoare intreaga n < m.Impartiti
+ //   tabloul citit in doua sub - tablori astfel :
+//a) primul subtablou va contine primele n elemente din tabloul initial
+//b) al doilea subtablou va contine restul elementelor din tablul initial.
+//Sa se realizeze urmatoarele operatii :
+//1. sa se ordoneze crescator cele doua subtablouri
+//2. sa se sorteze tabloul initial, prin interclasarea celor doua subtablori ordonate. (merge - sort)
+//FERENTIU EMMA-LUCIANA 2115
+#include    <iostream>
+using namespace std;
+void sortarecrescator(int V[100], int n);
+void interclasare(int a[100], int b[100], int c[100], int n, int m);
+int main()
+{
+    int a[100], b[100], c[200], aux[100];
+    int n, m, k = -1, nrunu, nrdoi, j;
+    cout << "Introduceti numarul de elemente corespunzator vectorului "; cin >> m;
+    cout << "Introduceti elementele vectorului: ";
+    for (int i = 0; i < m; i++)
+        cin >> aux[i];
+    cout << "Introduceti un numar mai mic decat  " << m; cin >> n;
+    j = -1;
+    
+    for (int i = n; i <m; i++)
+    {
+        j++;
+        b[j] = aux[i];
+        
+    }
+    nrunu = j;
+    j = -1;
+    
+    for (int i = 0; i <n; i++)
+    { 
+        j++;
+        a[j] = aux[i];
+     
+    }
+    nrdoi = j;
+     sortarecrescator(a, nrdoi+1);
+ 
+    
+     sortarecrescator(b, nrunu+1);
+   
+  
+     interclasare(a, b, c, nrdoi+1, nrunu+1);
+
+
+int d;
+    for (d = 0; d <m; d++)
+        cout << c[d];
+    return 0;
+}
+void sortarecrescator(int V[100],int n )
+{
+    int i, j, schimb;
+    for (i = 0; i <= n - 2; i++)
+    {
+        for (j = i + 1; j <= n-1; j++)
+        {
+            if (V[i] > V[j])
+            {
+                schimb = V[i];
+                V[i] = V[j];
+                V[j] = schimb;
+            }
+        }
+
+    }
+}
+void interclasare(int a[100],int b[100], int c[100], int n, int m)
+{
+
+    int i = 0, j = 0;
+     int p = -1;
+    while (i < n && j < m)
+        if (a[i] < b[j])
+        {
+            p++; c[p] = a[i]; i++;
+        }
+   
+        else
+        {
+            p++; c[p] = b[j]; j++;
+        }
+    while (i < n)
+    {
+        p++; c[p] = a[i]; i++;
+    }
+    while (j < m)
+    {
+        p++; c[p] = b[j]; j++;
+    }
+}
+...................................................................................................
+//Să se scrie un program care permite sortarea unui stoc de calculatoare.Acestea să se reprezinte în program ca
+//o structură formată din caracteristicile calculatoarelor(nume(sir caractere), tip de procesor(sir caractere),
+  //  frecventa de tact(long int), dimensiunea memoriei RAM(int), preț(float).Sortarea se va face, la alegerea
+   // utilizatorului, după: pret, memorie, tact sau tip de procesor.Folosiți, de preferință, funcția de bibliotecă pentru
+   // sortări qsort() sau o altă metodă la alegere.Sortați apoi considerând un câmp sir de caractere si unul numeric.
+   // Afișați rezultatele.
+
+//FERENTIU EMMA-LUCIANA 2115
+#include    <iostream>
+using namespace std;
+#include <iostream>
+using namespace std;
+#include <time.h>
+
+struct Calculator {
+        char nume[16];
+        char tipdeprocesor[20];
+        long int frecv;
+        int dimmemorie;
+        float pret;
+};
+int compararenume(const void* aa, const void* bb);
+int compararepret(const void* aa, const void* bb);
+int main()
+{
+        struct Calculator calc[] = {
+    {"a", "ds",{37483},{32}, {4353}},
+        {"c", "dc", { 84848 }, { 32 }, { 2321 }},
+        {"e", "dl", { 34343 }, { 16 }, { 4332 }},
+        {"b", "df", { 65656 }, { 8 }, { 2223 }},
+        {"d", "da", { 45646 }, { 64 }, { 3444 }}
+        };
+        qsort(calc, 5, sizeof(calc[0]), compararepret);
+        int i;
+        cout << "calculatoarele sortate dupa pret:";
+        for (i = 0; i < 5; i++)
+                cout << calc[i].nume << " " << calc[i].tipdeprocesor << " " << calc[i].frecv << " " << calc[i].dimmemorie << " " << calc[i].pret << "\n";
+        qsort(calc, 5, sizeof(calc[0]), compararenume);
+        cout << "calculatoare sortate dupa nume:";
+        for (i = 0; i < 5; i++)
+                cout << calc[i].nume << " " << calc[i].tipdeprocesor << " " << calc[i].frecv << " " << calc[i].dimmemorie << " " << calc[i].pret << "\n";
+
+
+}
+int compararenume(const void* aa, const void* bb)
+{
+        Calculator* a = (Calculator*)aa;
+        Calculator* b = (Calculator*)bb;
+        if ((strcmp(a->nume, b->nume) > 0)) return 1;
+        else if ((strcmp(a->nume, b->nume) < 0)) return -1;
+}
+int compararepret(const void* aa, const void* bb)
+{
+        Calculator* a = (Calculator*)aa;
+        Calculator* b = (Calculator*)bb;
+        if( (*a).pret>(*b).pret) return 1;
+        else 
+                return -1;
+}
+......................................................................................................................
+//Generati in mod aleatoriu un tablou de maxim 200 valori intregi, valori nu mai mari de 100. Determinati si
+//afisati valoarea minima, mediana si maxima generata, sortand elementele printr - o metoda la alegere.
+//Determinati valoarea medie si comparati aceasta valoare cu cea mediana(afisati diferenta).Verificati daca
+//valoarea medie este in tabloul initial generat.
+
+//FERENTIU EMMA-LUCIANA 2115
+#include    <iostream>
+using namespace std;
+#include <iostream>
+using namespace std;
+#include <time.h>
+void sortarecrescator(int V[100], int n);
+int main()
+{
+        srand(time(NULL));
+
+    int x[200], s = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            x[i] = rand() % 100;
+            s = s + x[i];
+        }
+    sortarecrescator(x, 10);
+    int mediana;
+    mediana = x[10 / 2];
+    cout << "Mediana sirului a este " << mediana << "\n";
+    cout << "Valoarea minima a sirului este " << x[0] << "\n";
+    cout << "Valoarea maxima a sirului este " << x[9] << "\n";
+    int vmed = s / 10;
+    cout << "diferenta dintre valoarea medie si cea mediana este " << mediana - vmed << "\n";
+    s = -1;
+    for (int i = 0; i < 10; i++)
+    {
+        if (x[i] == vmed)
+            s = 0;
+    }
+    if (s == 0)
+        cout << "valoarea medie se gaseste in si r";
+    else
+        cout << "valoarea medie nu se gaseste in sir";
+
+
+}
+void sortarecrescator(int V[100], int n)
+{
+    int i, j, schimb;
+    for (i = 0; i <= n - 2; i++)
+    {
+        for (j = i + 1; j <= n - 1; j++)
+        {
+            if (V[i] > V[j])
+            {
+                schimb = V[i];
+                V[i] = V[j];
+                V[j] = schimb;
+            }
+        }
+
+    }
+}
+......................................................................................................

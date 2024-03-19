@@ -1,0 +1,240 @@
+//Scrieţi un program C++ în care afişaţi diferite valori în zecimal, octal şi hexazecimal.Afişaţi
+//valorile aliniate la dreapta, respectiv la stânga într - un câmp de afişare cu dimensiunea 15.
+//Utilizaţi manipulatorul setfill() pentru stabilirea caracterului de umplere şi metodele width()
+//şi precision() pentru stabilirea dimensiunii câmpului de afişare şi a preciziei.
+
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+        cout << "nr in dec" << "\n";
+        cout  << dec << 100 << "\n";
+        
+        cout.setf(ios::right);
+        cout << "\nAlinierea la dreapta, nr in hex\n";
+        cout << setfill('*');
+        cout << setw(15);
+        cout<< setprecision(5);
+        cout << hex << 100 << "\n";
+        cout.unsetf(ios::right);
+
+        cout.setf(ios::left);
+        cout << "\n\nAlinierea la stanga, nr in oct!\n";
+
+        cout << setfill('*');
+        cout << setw(15);
+        cout<< setprecision(5);
+        cout << oct << 100;
+        cout.unsetf(ios::left);
+
+        
+}
+................................................
+//FERENTIU EMMA LUCIANA
+//Scrieti o aplicatie C++ in care se citesc de la tastatura date de diferite tipuri, urmand a fi
+//afisate pe ecran utilizand manipulatorii standard.
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+        double x;
+        cout << "Introduceti un numar real";
+        cin >> x;
+        char a[30];
+        cout << "\nIntroduceti un sir ";
+
+        cout << "Numarul prelucrat \n";
+        cout << setw(8);
+        cout << setfill(')');
+        cout<< setprecision(2);
+        cout << x;
+
+
+        cin >> a;
+        cout << "Sirul prelucrat ";
+        cout << setw(20) << setfill('^');
+        cout << a;
+
+        
+}
+.......................................................................
+//4. Definiti o clasa numita MiscareAccelerata care contine atributele private dc(distanta curenta,
+//        vc(viteza curenta) si a(acceleratia), atributele dc, vc si a sunt initializate in constructor iar
+//        valoarea lor este cea data de d0 si v0, si a0 ca si parametri.In clasa sunt supraincarcati
+//        operatorii de extractie si de inserție pentru a se putea initializa si afisa caracteristicile unei
+//        instante.Implementati metoda determinaMiscarea care re - calculeaza variabilele dc si vc, pe
+//        baza unui numar de secunde primit ca si parametru si avand in vedere legea miscarii rectilinii
+//        uniform accelerate cu acceleratie a0.
+//FERENTIU EMMA LUCIANA
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+class MiscA {
+private:
+        int dc, vc, a;
+public:
+        MiscA()
+        {
+                dc = 0;
+                vc = 0;
+                a = 0;
+        }
+        MiscA(int x, int y, int z)
+        {
+                dc = x;
+                vc = y;
+                a = z;
+        }
+
+
+
+        friend ostream& operator<< (ostream& stream, MiscA ob);
+        friend istream& operator>> (istream& stream, MiscA& pb);
+        friend void detMisc(int time, int a0, MiscA& ob);
+};
+
+ostream& operator<< (ostream& stream, MiscA ob) {
+        
+        stream << "\nDistanta este" << ob.dc;
+        stream << "\nViteza este" << ob.vc;
+        stream << "\nAcceleratia este " << ob.a;
+        stream << "\n";
+
+        return stream;
+}
+
+istream& operator>> (istream& stream, MiscA& pb) 
+{
+        cout << "\nIntroduceti distanta,viteza si acceleratia: ";
+        stream >> pb.dc;
+        stream >> pb.vc;
+        
+        stream >> pb.a;
+        return stream;
+}
+
+void detMisc(int timp, int ac, MiscA& ob) 
+{
+        int a = timp * ac;
+        ob.vc = a;
+        int b = timp * a;
+        ob.dc = b;
+}
+
+int main() {
+
+        int t;
+        cout << "Introduceti timpul(in sec) ";
+        cin >> t;
+        int a;
+        cout << "Introduceti acceleratia ";
+        cin >> a;
+
+        MiscA ex(2,4,4);
+        cin >> ex;
+        cout << ex;
+        detMisc(t, a, ex);
+        cout << "avand in vedere legea miscarii rectilinii";
+        cout << ex;
+
+        
+}
+...................................................................
+//şi imaginare sunt ambele protected de tip real.Derivaţi public o clasă Punct din clasa
+//Complex, adăugând atributul culoare pentru punctul de coordonate x şi y corespunzător părții
+//reale, respectiv imaginare a numărului complex.Supraîncărcaţi din nou aceiași operatori de
+//intrare - ieșire.Instantiati obiecte de tip Complex si Punct si verificati functionalitatea
+//supraincarcarii operatorilor.Asignati un obiect de tip Punct la unul de tip Complex prin
+//upcasting si afisati atributele lui.
+//FERENTIU EMMA LUCIANA
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+class Cplx {
+protected:
+        double imaginar;
+        double real;
+public:
+        Cplx()
+        {
+                imaginar = 0;
+                real = 0;
+        }
+        Cplx(double img, double r)
+        {
+                imaginar = img;
+                real = r;
+        }
+        friend istream& operator>> (istream& stream, Cplx& ex);
+        friend ostream& operator<< (ostream& stream, Cplx& ex);
+};
+
+istream& operator>> (istream& stream, Cplx& object) {
+        cout << "introduceti partea reala si imaginara ";
+        stream >> object.real;
+        stream >> object.imaginar;
+        return stream;
+}
+
+ostream& operator<< (ostream& stream, Cplx& object) {
+        stream << "Numarul complex este " << object.real;
+        stream<< " + " << object.imaginar << "i";
+        return stream;
+}
+
+class Punctul : public Cplx {
+protected:
+        string culoarea;
+        
+public:
+        Punctul() {
+                real = 0;
+                imaginar = 0;
+                culoarea="0";
+        }
+        Punctul(double imaginar, double real, string cul) :Cplx(imaginar, real)
+        {
+                culoarea = cul;
+        }
+        
+        friend istream& operator>> (istream& stream, Punctul& object);
+        friend ostream& operator<< (ostream& stream, Punctul& object);
+};
+
+istream& operator>> (istream& stream, Punctul& object) {
+        cout << "\n        Introduceti partea reala si imaginara: ";
+        stream >> object.real;
+        stream >> object.imaginar;
+        cout << "Introduceti culoarea: ";
+        stream >> object.culoarea;
+        return stream;
+}
+
+ostream& operator<< (ostream& stream, Punctul& object) {
+        stream << "\nNr complex " << object.real << " + " << object.imaginar << "i";
+        stream << "\nCuloarea acestuia " << object.culoarea;
+        return stream;
+}
+
+int main() {
+        Cplx unu;
+        Punctul doi;
+        cin >> unu;
+        cout << unu;
+        
+        cin >> doi;
+        cout << doi;
+        Cplx trei = doi;
+        cout << trei;
+
+        
+}

@@ -1,0 +1,22 @@
+//Să se scrie un program care foloseşte metoda seekg() pentru poziţionare la mijlocul fişierului
+//si apoi afişează conţinutul fişierului începând cu această poziţie.Numele fişierului se citeste
+//din linia de comandă.
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+
+
+
+        ifstream in;
+        in.open(argv[1]);
+        in.seekg(0, in.end);
+        in.seekg(in.tellg() / 2, in.beg);
+
+        char* o = new char[10];
+        in.read(o, in.tellg() / 2);
+        cout.write(o, in.tellg() / 2);
+
+}

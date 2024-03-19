@@ -1,0 +1,275 @@
+//Definiţi o funcţie inline min() care determină şi afişează minimul dintre 2 si alta dintre 3 numere întregi
+//FERENTIU EMMA-LUCIANA
+//2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdarg.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+
+#include <iostream>
+using namespace std;
+#define MAX2(a, b) ((a) > (b) ? (a) : (b))
+#define MAX3(a, b,c) ((MAX2(a,b)) > (c) ? (MAX2(a,b)): (c))
+int main()
+{
+        int v1, v2, v3;
+        cout << "Introduceti 2 valori intregi: ";
+        cin >> v1;
+        cin >> v2;
+        cout << "\n Max este= " << MAX2(v1,v2) << endl;
+        cout << "Introduceti 3 valori intregi: ";
+        cin >> v1;
+        cin >> v2;
+        cin >> v3;
+        cout << "\n Max este= " << MAX3(v1,v2,v3) << endl;
+
+}
+................................................................................................................................
+//Definiţi funcţii macro MAXi (i=2,3)care determină şi afişează maximul dintre 2 si alta, dintre 3 numere 
+//EMMA-LUCIANA FERENTIU
+//2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdarg.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+
+#include <iostream>
+using namespace std;
+inline int min(int a, int b);
+inline int min(int a, int b, int c);
+int main()
+{
+        int v1, v2, v3, minim;
+        cout << "Introduceti 2 valori intregi: ";
+        cin >> v1;
+        cin >> v2;
+        minim = min(v1, v2);
+        cout << "\n Min este= " << minim << endl;
+        cout << "Introduceti 3 valori intregi: ";
+        cin >> v1;
+        cin >> v2;
+        cin >> v3;
+        minim = min(v1, v2, v3);
+        cout << "\n Min este= " << minim << endl;
+
+}
+inline int min(int a, int b)
+{
+        if (a > b) return b;
+        return a;
+}
+inline int min(int a, int b, int c)
+{
+        if (b < a && b < c) return b;
+        if (c < a && c < b) return c;
+        return a;
+}
+
+//FERENTIU EMMA-LUCIANA
+//GRUPA 2115
+//Consideraţi o funcţie cu 3 parametrii toţi impliciţi(int, float, double) care returnează produsul acestor valori.
+//Apelaţi funcţia considerând mai multe variante de apel concrete(fără parametri, 1 parametru, 2 parametri, 3
+//        parametri).
+#define _CRT_SECURE_NO_WARNINGS
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+using namespace std;
+double produs(int a = 2, float b = 3.5, double c = -12.2);
+int main() {
+        int a;
+        float b;
+        double c;
+        cout << "introduceti o valoare int";
+        cin >> a;
+        cout << "introduceti o valoare float";
+        cin >> b;
+        cout << "introduceti o valoare double";
+        cin >> c;
+        cout << produs();
+        cout << "\n";
+        cout << produs(a);
+        cout << "\n";
+        cout << produs(a,b);
+        cout << "\n";
+        cout << produs(a,b,c);
+        cout << "\n";
+
+
+
+        return 0;
+}
+double produs(int a, float b, double c)
+{
+        double prod = a * b * c;
+        return prod;
+}
+
+//FERENTIU EMMA-LUCIANA
+//GRUPA 2115
+//Consideraţi o funcţie cu 3 parametrii toţi impliciţi(int, float, double) care returnează produsul acestor valori.
+//Apelaţi funcţia considerând mai multe variante de apel concrete(fără parametri, 1 parametru, 2 parametri, 3
+//        parametri).
+#define _CRT_SECURE_NO_WARNINGS
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+using namespace std;
+double produs(int a = 2, float b = 3.5, double c = -12.2);
+int main() {
+        int a;
+        float b;
+        double c;
+        cout << "introduceti o valoare int";
+        cin >> a;
+        cout << "introduceti o valoare float";
+        cin >> b;
+        cout << "introduceti o valoare double";
+        cin >> c;
+        cout << produs();
+        cout << "\n";
+        cout << produs(a);
+        cout << "\n";
+        cout << produs(a,b);
+        cout << "\n";
+        cout << produs(a,b,c);
+        cout << "\n";
+
+
+
+        return 0;
+}
+double produs(int a, float b, double c)
+{
+        double prod = a * b * c;
+        return prod;
+}
+
+//FERENTIU EMMA-LUCIANA
+//GRUPA 2115
+//5. Folosind supraîncărcarea funcţiilor definiţi trei funcţii cu acelaşi nume dar cu tipuri diferite de parametri(int,
+//        int*, int&) care returnează radicalul unei valori intregi.Analizaţi cazul transmiterii parametrilor prin valoare
+        //şi prin referinţă.
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <math.h>
+using namespace std;
+double radacina(int n);
+double radacina(int &n, int a);
+double radacina(int* p, int b, int c);
+int main() {
+        int a;
+        cout << "introduceti o valoare int";
+        cin >> a;
+        cout << "radacina este";
+        cout << radacina(a);
+        cout << "\n";
+        cout << "radacina este";
+        cout << radacina(&a, 3, 4);
+        cout << "\n";
+        cout << "radacina este";
+        cout<<radacina(a, 2);
+        cout << "\n";
+
+
+
+        return 0;
+}
+double radacina(int n)
+{
+        return sqrt(n);
+}
+double radacina(int& n, int a)
+{
+        
+                return sqrt(n);
+                n = sqrt(n);
+}
+double radacina(int* p, int b, int c)
+{
+        int a = *p;
+        return sqrt(a);
+} 
+
+
+//FERENTIU EMMA-LUCIANA
+//GRUPA 2115
+//Determinaţi minimul dintr - un tablou unidimensional de 10 numere flotante(introduse de la
+        //tastatură / iniţializate) folosind funcţii cu un număr variabil de parametri.Se vor considera primele 7 valori din
+        //şir, apoi următoarele 3, după care se afişează minimul din cele 10 folosind valorile determinate anterior.
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <stdarg.h>
+#include <math.h>
+using namespace std;
+int maxx(int numar, ...);
+int main() {
+        
+
+        int max1, max2;
+        max1 = maxx(7, 2, 1, 6, 7, 45, 7, 454);
+        max2 = maxx(3, 565, 4, 5);
+        max1 = maxx(2, max1, max2);
+        cout << max1;
+        return 0;
+}
+int maxx(int numar, ...)
+{
+        va_list a;                         
+        int i, rezultat = 0, aux;
+        va_start(a, numar);
+        int maxim = va_arg(a, int);
+        for (i = 1; i < numar; i++)
+        {
+                aux = va_arg(a, int);
+                if (maxim < aux)
+                        maxim = aux;
+        }
+        return maxim;
+}
+
+
+//FERENTIU EMMA
+//7. Scrieţi un program care face o codare simplă prin adaugarea la codul ASCII al caracterului, o valoare n=3,
+//folosind macro funcții.Exemplu: ‘a’ devine în urma codării ‘d’
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdarg.h>
+#include <math.h>
+#include <iostream>
+using namespace std;
+
+
+#include <iostream>
+using namespace std;
+#define COD(a,n) (a=int(a)+n)
+
+int main()
+{
+    char a;
+    int n;
+    cout << "Introduceti o litera ";
+    cin >> a;
+    cout << "introduceti un intreg";
+    cin >> n;
+    cout << "\n litera obtinuta este= " << COD(a,n) << endl;
+   
+
+}

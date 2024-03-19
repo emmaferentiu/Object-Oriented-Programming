@@ -1,0 +1,315 @@
+/*FERENTIU EMMA LUCIANA, 2115
+1. Construiţi o aplicaţie în care clasa OraCurenta are ca atribute private ora, minutele şi secundele şi metode publice de tip set/get
+pentru atributele clasei. Adaugaţi o functie friend clasei prin care să se poată copia conţinutul unui obiect OraCurenta dat ca si parametru,
+într-un alt obiect instanţă a aceleiaşi clase care va fi returnat de functie, ora fiind insa modificata la Greenwich Mean Time.
+Utilizati timpul curent al calculatorului.*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<ctime>
+#include<iostream>
+using namespace std;
+
+class OraCurenta {
+        int ora, min, secunde;
+public:
+        void setOra(int a)
+        {
+                this->ora = a;
+        }
+        int getOra()
+        {
+                return ora;
+        }
+        void setMinute(int a)
+        {
+                this->min = a;
+        }
+        int getMinute()
+        {
+                return min;
+        }
+        void setSecunde(int a)
+        {
+                this->secunde = a;
+        }
+        int getSecunde()
+        {
+                return secunde;
+        }
+        friend OraCurenta GMT(const OraCurenta exemplu);
+};
+OraCurenta GMT(const OraCurenta exemplu) {
+        OraCurenta greenwich;
+        greenwich.ora = exemplu.ora;
+        greenwich.min = exemplu.min;
+        greenwich.secunde = exemplu.secunde;
+        time_t timpcurent;
+        struct tm* timp;
+        time(&timpcurent);
+        timp = localtime(&timpcurent);
+
+        greenwich.ora = timp->tm_hour;
+        greenwich.min = timp->tm_min;
+        greenwich.secunde = timp->tm_sec;
+
+        cout << "\nOra exacta este: " << greenwich.ora << ":" << greenwich.min << ":" << greenwich.secunde;
+        timp = gmtime(&timpcurent);
+
+        greenwich.ora = timp->tm_hour;
+        greenwich.min = timp->tm_min;
+        greenwich.secunde = timp->tm_sec;
+        cout << "\nOra exacta GMT este: " << greenwich.ora << ":" << greenwich.min << ":" << greenwich.secunde;
+
+        return greenwich;
+};
+
+int main()
+{
+        int a, b, c;
+        OraCurenta x;
+        cout << "\n Introduceti ora, minutele si secundele:";
+        cin >> a >> b >> c;
+        x.setOra(a);
+        x.setMinute(b);
+        x.setSecunde(c);
+        GMT(x);
+        return 0;
+}
+.....................................................................................
+/*FERENTIU EMMA-LUCIANA, 2115
+2. Scrieţi o aplicaţie C/C++ în care clasa Calculator are un atribut privat memorie_RAM (int) şi o funcție prietenă tehnician_service( ) care
+permite modificarea valorii acestui atribut. Functia friend va fi membra intr-o alta clasa, Placa_de_baza care are o componentă denumire_procesor
+(sir de caractere). Scrieţi codul necesar care permite funcției prietene tehnician_service( ) să modifice (schimbe) valoarea
+variabilei denumire_procesor si memorie _RAM.*/
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+using namespace std;
+class Placadbaza {
+        char denprocesor[100];
+public:
+        void setDenumire(char a[100])
+        {
+                strcpy(denprocesor, a);
+        }
+        string getDenumire()
+        {
+                return denprocesor;
+        }
+        void tehnician_service();
+        
+};
+class Calculator {
+        int memorie_RAM;
+public:
+
+        void setMemorie(int a)
+        {
+                memorie_RAM = a;
+        }
+        int getMemorie()
+        {
+                return memorie_RAM;
+        }
+        friend void Placadbaza:: tehnician_service();
+        
+};
+
+
+
+void Placadbaza::tehnician_service()
+{
+        Calculator c;
+        Placadbaza p;
+        char s[100];
+        int x;
+
+        cout << "\n Dati o alta valoare pentru memoria RAM:";
+        cin >> x;
+        c.memorie_RAM = x;
+        cout << "\nDati o  alta denumire pentru procesor:";
+        cin >> s;
+        strcpy(p.denprocesor, s);
+        cout << "Memoria RAM noua este " << c.memorie_RAM << ",iar denumirea procesorului este " << p.denprocesor;
+
+}
+
+int main()
+{
+        Placadbaza p;
+        Calculator c;
+        
+        char y[100];
+        int x;
+
+        cout << "\ndati o denumire pentru procesor";
+        cin >> y;
+        p.setDenumire(y);
+        cout << "\n dati o valoare pt memoria RAM";
+        cin >> x;
+
+        c.setMemorie(x);
+        cout << "Memoria RAM este " << c.getMemorie() << ",iar denumirea procesorului este " << p.getDenumire();
+        p.tehnician_service();
+
+
+        return 0;
+}
+.............................................................................................
+//3. Definţi o clasă numită Repository care are două variabile private de tip întreg.Clasa mai conţine un constructor
+//explicit vid si unul cu 2 parametri şi o metodă accesor care afişează valorile variabilelor din clasă.Scrieţi o
+//clasă numită Mathemathics, friend cu prima clasă, care implementează operaţiile aritmetice elementare(+, -, *,
+//        / ) asupra variabilelor din prima clasa.Fiecare metoda primeşte ca parametru un obiect al clasei Repository
+//FERENTIU EMMA LUCIANA
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+using namespace std;
+class Repository {
+        int a, b;
+public:
+        Repository() = default;
+        Repository(int x, int y) 
+        {
+                a = x;
+                b = y;
+        }
+         int getA()
+        {
+                return a;
+        }
+         int getB()
+        {
+                return b;
+        }
+        friend class Mate;
+
+};
+class Mate {
+        
+public:
+     int Adunare(const Repository c)
+        {
+                 return c.a + c.b;
+        }
+         int Scadere(const Repository c)
+         {
+                 return c.a -c.b;
+         }
+        
+        int  Inmultire(const Repository c)
+         {
+                 return c.a * c.b;
+         }
+
+};
+int main()
+{
+        int a, b;
+
+        Mate m;
+        cout << "introduceti 2 numere";
+        cin >> a >> b;
+        Repository obiect(a, b);
+        cout << "suma este "<<m.Adunare(obiect);
+        cout << "diferenta este " << m.Scadere(obiect);
+        cout << "produsul este" << m.Inmultire(obiect);
+
+}
+.............................................................
+//5. Rezolvaţi problema 4 în cazul în care variabila statică este de tip private.Definiţi o metodă accesor care
+//returnează valoarea contorului.Analizati cazul in care metoda accesor e statica sau nestatica si modul in care e
+//apelata
+//FERENTIU EMMA LUCIANA
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+using namespace std;
+class Exemplu {
+        int numar;
+        static int var_static;
+
+public:
+
+        void setNumar(int a) {
+                numar = a;
+                var_static++;
+        }
+        int getNumar() {
+                return numar;
+        }
+        
+        static int getVar_static() {
+                return var_static;
+        }
+        
+
+};
+int Exemplu::var_static;
+
+int main()
+{
+        Exemplu unu;
+
+
+        bool ok = 1;
+        int g;
+        char h;
+        while (ok == 1)
+        {
+                cout << "\n introduceti o valoare: ";
+                cin >> g;
+                unu.setNumar(g);
+                cout << "\n Mai doriti sa introduceti valori? D/N";
+                cin >> h;
+
+                if (h == 'N' || h == 'n')
+                
+                        ok = 0;
+        }
+        cout << "numarul de valori introduse este" << unu.getVar_static();
+}
+...........................................................................................
+//4. Scrieţi o aplicaţie C / C++ care defineşte într - o clasă variabila publică contor var_static de tip static întreg.
+//Aceasta se va incrementa în cadrul constructorului.După o serie de instanţieri, să se afişeze numarul de obiecte
+//create(conţinutul variabilei var_static)
+//FERENTIU EMMA LUCIANA
+#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
+using namespace std;
+class Exemplu {
+        int numar;
+        
+public:
+        static int var_static;
+        
+        void setNumar(int a) {
+                numar = a;
+                var_static++;
+        }
+        int getNumar() {
+                return numar;
+        }
+        
+        
+
+};
+int Exemplu::var_static;
+
+int main()
+{
+        Exemplu unu;
+
+
+        bool ok = 1;
+        int g;
+        char h;
+        while (ok == 1)
+        {
+                cout << "/n introduceti o valoare: ";
+                cin >> g;
+                unu.setNumar(g);
+                cout << "/n Mai doriti sa introduceti valori? D/N";
+                cin >> h;
+
+                if (h == 'N' || h == 'n')
+                
+                        ok = 0;
+        }
+        cout << "num

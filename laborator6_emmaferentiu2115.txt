@@ -1,0 +1,412 @@
+/*. Să se scrie o aplicaţie C++ care implementează o clasă numită PilotF1.Clasa definește
+variabilele private nume(șir de caractere), echipa(șir de caractere), varsta(int), record(int),
+nr_pole_position(int).Ca membri publici, clasa conține metode accesor / getter și
+mutator / setter distincte pentru fiecare din atributele clasei.
+In funcția main(), să se creeze 3 instanțe distincte ale clasei PilotF1 și să se folosească
+metodele mutator / setter pentru a inițializa datele din fiecare obiect cu informația
+corespunzătoare citită de la tastatură.Folosind metodele accesor / getter, să se afișeze toate
+datele pilotului cu cel mai bun record. */
+//FERENTIU EMMA-LUCIANA GRUPA 2115
+#include <iostream>
+using namespace std;
+class PilotulFormulaUnu {
+
+        int varsta;
+        int record;
+        int pozitia;
+        char numele[20];
+        char echipapentrucareparticipa[20];
+public:
+        char* getNume() {
+                return numele;
+        }
+        char* getEchipa() {
+                return echipapentrucareparticipa;
+        }
+        int getVarsta() {
+                return varsta;
+        }
+        int getRecord() {
+                return record;
+        }
+        int getPozitia() {
+                return pozitia;
+        }
+        void setNume(char* unu) {
+                strcpy_s(numele, unu);
+        }
+        void setEchipa(char* unu) {
+                strcpy_s(echipapentrucareparticipa, unu);
+        }
+        void setVarsta(int y) {
+                varsta = y;
+        }
+        void setRecord(int y) {
+                record = y;
+        }
+        void setPozitia(int y) {
+                pozitia = y;
+        }
+};
+int main() {
+        PilotulFormulaUnu unu, doi, trei;
+        char sir[20];
+        int y;
+        cout << "\n Primul pilot se numeste ";
+        cin >> sir;
+        unu.setNume(sir);
+        cout << "\nAl doilea pilot se numestee ";
+        cin >> sir;
+        doi.setNume(sir);
+        cout << "\nAl treilea pilor se numeste  ";
+        cin >> sir;
+        trei.setNume(sir);
+        cout << "\nNumele echipei la care participa primul pilot? ";
+        cin >> sir;
+        unu.setEchipa(sir);
+        cout << "\nNumele echipei la care participa al doilea pilot? ";
+        cin >> sir;
+        doi.setEchipa(sir);
+        cout << "\nNumele echipei la care  participa al treilea pilot? ";
+        cin >> sir;
+        trei.setEchipa(sir);
+        cout << "\nIntroduceti varsta primului pilot: ";
+        cin >> y;
+        unu.setVarsta(y);
+        cout << "\nIntroduceti varsta celui de al doilea pilot: ";
+        cin >> y;
+        doi.setVarsta(y);
+        cout << "\nIntroduceti varsta celui de al treilea pilot: ";
+        cin >> y;
+        trei.setVarsta(y);
+        cout << "\nRecordul primului pilot este ";
+        cin >> y;
+        unu.setRecord(y);
+        cout << "\nRecordul celui de-al doilea pilot este: ";
+        cin >> y;
+        doi.setRecord(y);
+        cout << "\nRecordul celui de-al treilea pilot este ";
+        cin >> y;
+        trei.setRecord(y);
+        cout << "\nCare este pozitia de start a primului pilot? ";
+        cin >> y;
+        unu.setPozitia(y);
+        cout << "\nCare este pozitia de start al celui de al doilea pilot? ";
+        cin >> y;
+        doi.setPozitia(y);
+        cout << "\nCare este pozitia de start al celui de al treilea pilot? ";
+        cin >> y;
+        trei.setPozitia(y);
+        if (unu.getRecord() < doi.getRecord() && unu.getRecord() < trei.getRecord()) {
+                cout << "\nPilotul cu cel mai bun record este: " << unu.getNume();
+                cout << "\nVarsta: " << unu.getVarsta();
+                cout << "\nEchipa: " << unu.getEchipa();
+                cout << "\nRecord: " << unu.getRecord();
+                cout << "\nPozitia de start: " << unu.getPozitia();
+        }
+         else if (doi.getRecord() < unu.getRecord() && doi.getRecord() < trei.getRecord()) {
+                cout << "\nPilotul cu cel mai bun record este: " << doi.getNume();
+                cout << "\nVarsta: " << doi.getVarsta();
+                cout << "\nEchipa: " << doi.getEchipa();
+                cout << "\nRecord: " << doi.getRecord();
+                cout << "\nPozitia de start: " << doi.getPozitia();
+        }
+         else
+        {
+                cout << "\nPilotul cu cel mai bun record este: " << trei.getNume();
+                cout << "\nVarsta: " << trei.getVarsta();
+                cout << "\nEchipa: " << trei.getEchipa();
+                cout << "\nRecord: " << trei.getRecord();
+                cout << "\nPozitia de start: " << trei.getPozitia();
+        }
+        
+        return 0;
+}
+---------------------------------------------------------------------------------------------------------------
+/*2. Să se modifice exemplul 2 astfel încât codul să poată fi lansat în execuție considerand
+atributul clasei private si metode public get / set adecvate.In main() instantiati un obiect din
+clasa care va fi modificat si apoi accesat, afisand rezultatul*/
+//FERENTIU EMMA-LUCIANA
+#include <iostream>
+
+using namespace std;
+class Testul {
+        int y;
+public:
+        void setX(int exemplu) {
+                y = exemplu;
+        }
+        int getX() {
+                return y;
+        }
+        Testul() {
+                y = 0;
+                cout << "\nApel constructor explicit vid.";
+        }
+};
+int main() {
+        Testul obiectunu;
+        int exemplu;
+        cout << "\nDati valoarea variabilei ";
+        cin >> exemplu;
+        obiectunu.setX(exemplu);
+        cout << "\nValoarea citita de la tastatura este: " << obiectunu.getX();
+
+        return 0;
+}
+.....................................................................................................
+//FERENTIU EMMA-LUCIANA
+/*4. Să se scrie o clasă care are ca variabilă privată un câmp de tip data, definit într - o structură
+externă clasei(zi �" int, luna �" int, an - int).Clasa conține metode mutator / setter și
+accesor / getter(publice) pentru informația privată, ca si structura de tip data, pentru fiecare
+camp din structura.In clasă se mai află doua metode publice care :
+-testează validitatea datei stocate;
+-scrie într - un fișier toate datele din anul curent care preced(cronologic) data stocată în
+clasă considerand doar atributul an ca fiind variabil;
+In functia main(), după instanțierea clasei și citirea de la tastatură a componentelor unei date,
+să se apeleze metodele membre și apoi să se verifice rezultatele obținute. */
+#include <iostream>
+#include <fstream>
+using namespace std;
+struct Data {
+        int ziua;
+        int  luna;
+        int anul;
+};
+class Clasa {
+        Data d;
+public:
+        ofstream f;
+        Clasa(int luna = 5, int ziua = 3, int anul = 1950) {
+                d.ziua = ziua;
+                d.luna = luna;
+                d.anul = anul;
+                cout << "\nApelare constructor cu valori implicite";
+        }
+        void setZiua(int y) {
+                d.ziua = y;
+        }
+        void setLuna(int x) {
+                d.luna = x;
+        }
+        void setAnul(int x) {
+                d.anul = x;
+        }
+        int getZiua() {
+                return d.ziua;
+        }
+        int getLuna() {
+                return d.luna;
+        }
+        int getAnul() {
+                return d.anul;
+        }
+        bool validarezi(int x) {
+                if (x > 31)
+                        return 1;
+        }
+        bool validareluna(int x) {
+                if (x > 12)
+                        return 1;
+        }
+        void scrie() {
+                f.open("Datele.txt");
+                for (int n = d.ziua; n >= 1; n--)
+                        f << n << "." << d.luna << "." << d.anul << endl;
+                for (int luna = d.luna - 1; luna >= 1; luna--) {
+                        if (luna == 2) //exceptie luna februatie
+                        {
+                                for (int n = 28; n >= 1; n--)
+                                        f << n << "." << luna << "." << d.anul << endl;
+                        }
+                        else if (luna == 4 || luna == 6 || luna == 9 || luna == 11) {
+                                for (int n = 30; n >= 1; n--)
+                                        f << n << "." << luna << "." << d.anul << endl;
+                        }
+                        else {
+                                for (int n = 31; n >= 1; n--)
+                                        f << n << "." << luna << "." << d.anul << endl;
+                        }
+                }
+        }
+};
+int main() {
+        Clasa a;
+        int ex;
+        cout << "\nIntroduceti ziua: ";
+        cin >> ex;
+        if (a.validarezi(ex) == 1) {
+                cout << "\ndatele sunt invalide ";
+                
+        }
+        else
+                a.setZiua(ex);
+        cout << "\nIntroduceti luna: ";
+        cin >> ex;
+        if (a.validareluna(ex) == 1) {
+                cout << "\n datele sunt invalide ";
+                
+        }
+        else
+                a.setLuna(ex);
+        cout << "\nIntroduceti anul: ";
+        cin >> ex;
+        a.setAnul(ex);
+        cout << "\nData introdusa este: " << a.getZiua() << "." << a.getLuna() << "." << a.getAnul()
+                << endl;
+        a.scrie();
+        
+        return 0;
+}
+......................................................................................................
+/*Să se scrie o aplicaţie C++ care implementează o clasă numită Triunghi.Clasa cuprinde
+atributele private pentru laturile a, b, c de tip int, un constructor cu parametrii, metode setter si
+getter adecvate.Calculați aria și perimetrul prin metode specifice clasei.Scrieți o metodă care
+să indice dacă triunghiul este dreptunghic sau nu.Definiti o metoda private cu parametrii in
+clasa care permite verificarea condiției ca laturile să formeze un triunghi.Ea va fi folosita si
+de metodele setter */
+#include <iostream>
+
+using namespace std;
+class Triughiul {
+        int latura1,latura2,latura3;
+        bool verificareaconditiei(int latura1, int latura2, int latura3) {
+                if (latura1 + latura2 > latura3 && latura1 + latura3 > latura2 && latura2 + latura3 > latura1)
+                        return 1;
+                else
+                        return 0;
+        }
+public:
+        Triughiul(int a = 4, int b = 6, int c = 8) {
+                latura1 = a;
+                latura2 = b;
+                latura3 = c;
+                cout << "\nApel constructor cu parametrii ";
+        }
+        void setValori(int x, int y, int z) {
+                if (verificareaconditiei(x, y, z) == 1) {
+                        latura1 = x;
+                        latura2 = y;
+                        latura3 = z;
+                }
+                else {
+                        cout << "\n Valorile introduse nu pot fi laturile unui triunghi ";
+                                
+                }
+        }
+        void getValori() {
+                cout << "\nLaturile triunghiului au urmatoarele lungimi " << latura1 << "," << latura2 << "," << latura3;
+        }
+        double S() {
+                int p = (latura1 + latura2 + latura3);
+                p=p/ 2;
+                int g =sqrt( p * (p - latura1) * (p - latura2) * (p - latura3));
+                return g;
+        }
+        int Perimetrul() {
+                return latura1 + latura2 + latura3;
+        }
+        void Dreptunghic() {
+                if (latura1 * latura1 + latura2 * latura2 == latura3 * latura3 || latura1 * latura1 + latura3 * latura3 == latura2 * latura2 || latura2 * latura2 + latura3 * latura3 == latura1 * latura1)
+                        cout << "\nTriunghiul este dreptunghic.";
+        }
+};
+int main() {
+        Triughiul atriunghiul;
+        int a;
+        int b;
+        int c;
+        cout << "\nValorile pentru laturi: ";
+        cin >> a >> b >> c;
+        atriunghiul.setValori(a, b, c);
+        atriunghiul.getValori();
+        cout << endl;
+        cout << "\Aria triunghiului:" << atriunghiul.S();
+        cout << "\nPerimetrul triunghiului este: " << atriunghiul.Perimetrul();
+        atriunghiul.Dreptunghic();
+        
+        return 0;
+}
+
+        
+
+}
+.................................................................................
+/* Să se scrie clasa Seif, cu atributele private cifru (pin - sir de caractere, 4 cifre int) și suma de
+tip double. Definiți metodele private getSuma() și setSuma( ) și metodele public puneInSeif( )
+și scoateDinSeif( ) cu care să accesați suma de bani care se află în seif. Metoda puneInSeif( )
+poate apela getSuma() și setSuma( ), metoda scoateDinSeif( ) poate apela getSuma( )
+și setSuma( ). Instanțiați obiecte din clasa Seif, iar metodele puneInSeif( ) și scoateDinSeif( )
+vor putea accesa suma doar dacă parametrul de tip cifru utilizat corespunde obiectului
+instanțiat. În caz de diferență de cifru, se va da un mesaj. */
+#include <iostream>
+
+using namespace std;
+class Seiful {
+        int cifru = 4334;
+        double sumabani;
+        double getSumabani() {
+                return sumabani;
+        }
+        void setSumabani(double x) {
+                sumabani = x;
+        }
+public:
+        Seiful(int x = 10) {
+                sumabani = x;
+                cout << "\nApel Constructor.. ";
+        }
+        void puneInSeif(double y, int pinul) {
+                if (pinul == cifru) {
+                        setSumabani(getSumabani() + y);
+                        cout << "\n E in regula pinul,  suma de bani din seif este " << getSumabani();
+                }
+                else {
+                        cout << "\nPinul nu corespunde ";
+                }
+        }
+
+        void getDinSeif(double x, int pin) {
+                if (pin == cifru) {
+                        if (x <= getSumabani()) {
+                                setSumabani(getSumabani() - x);
+                                cout << "\nmai aveti: " << getSumabani();
+                        }
+                        else {
+                                cout << "\nfonduri insuficiente.";
+                                cout << "\nmaiaveti: " << getSumabani();
+                        }
+                }
+                else {
+                        cout << "\npin incorect ";
+
+                }
+        }
+};
+int main() {
+        Seiful s;
+        int x, pin;
+        char c;
+        
+                cout << "\n Doriti sa depozitati sau sa retrageti? (D/R)" << endl;
+                cin >> c;
+                if (c == 'R') {
+                        cout << "\nIntroduceti suma ";
+                        cin >> x;
+                        cout << "\nIntroduceti pinul: ";
+                        cin >> pin;
+                        s.getDinSeif(x, pin);
+                }
+                else if (c == 'D' || c == 'd') {
+                        cout << "\nIntroduceti suma ";
+                        cin >> x;
+                        cout << "\nIntroduceti pinul: ";
+                        cin >> pin;
+                        s.puneInSeif(x, pin);
+                }
+                else {
+                        cout << "\nInvalid. ";
+                }
+                
+        
+}

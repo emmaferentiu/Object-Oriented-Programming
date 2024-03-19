@@ -1,0 +1,453 @@
+//2. La exemplul al patrulea extindeţi clasa de bază cu alte metode virtuale, redefinite în clasele
+//derivate, cum ar fi metode get() şi set() pentru greutatea vehiculului(variabila greutate).
+#include <iostream>
+
+using namespace std;
+
+class Vehicul {
+        int roti;
+public:
+        float greutate;
+        Vehicul() {
+                greutate = 0;
+                roti = 0;
+        }
+        virtual void mesaj() {
+                cout << "Mesaj din clasa Vehicul\n";
+        }
+        virtual float getGreutate() {
+                return greutate;
+        }
+        virtual void setGreutate(float greutate) {
+                this->greutate = greutate;
+        }
+};
+
+class Automobil : public Vehicul {
+        int incarcatura_pasageri;
+public:
+        Automobil()
+        {
+                incarcatura_pasageri = 0;
+        }
+        void mesaj()
+        {
+                cout << "Mesaj din clasa Automobil\n";
+        }
+        float getGreutate() {
+                return (greutate * 2);
+        }
+        virtual void setGreutate(float greutate) {
+                this->greutate = greutate + incarcatura_pasageri;
+        }
+
+};
+
+class Camion : public Vehicul {
+        int incarcatura_pasageri;
+        float incarcatura_utila;
+public:
+        Camion()
+        {
+                incarcatura_pasageri = 0;
+                incarcatura_utila = 0;
+        }
+        int pasageri()
+        {
+                return incarcatura_pasageri;
+        }
+
+};
+
+class Barca : public Vehicul {
+        int incarcatura_pasageri;
+public:
+        Barca()
+        {
+                incarcatura_pasageri = 0;
+        }
+        int pasegeri()
+        {
+                return incarcatura_pasageri;
+        }
+        void mesaj()
+        {
+                cout << "Mesaj din clasa Barca\n";
+        }
+        virtual void setGreutate(float greutate) {
+                this->greutate = greutate + incarcatura_pasageri;
+        }
+        float getGreutate() {
+                return (greutate * 3);
+        }
+
+};
+
+int main() {
+        // apel direct, prin intermediul unor obiecte specifice
+        Vehicul monocicleta;
+        Automobil ford;
+        Camion semi;
+        Barca barca_de_pescuit;
+        monocicleta.mesaj();
+        ford.mesaj();
+        semi.mesaj();//din Vehicul ca si CB
+        barca_de_pescuit.mesaj();
+        // apel prin intermediul unui pointer specific
+        monocicleta.setGreutate(6.5);
+        ford.setGreutate(2);
+        semi.setGreutate(7);
+        barca_de_pescuit.setGreutate(1);
+
+
+
+        cout << "\nGreutatea motocicletei: " << monocicleta.getGreutate();
+
+        cout << "\nGreutatea fordului: " << ford.getGreutate();
+        cout << "\nGreutatea camion: " << semi.getGreutate(); //din Vehicul ca si CB
+        cout << "\nGreutatea barcii: " << barca_de_pescuit.getGreutate();
+        cout << "\n";
+
+        Vehicul* pmonocicleta;
+        Automobil* pford;
+        Camion* psemi;
+        Barca* pbarca_de_pescuit;
+
+        cout << "\n";
+        pmonocicleta = &monocicleta;
+        pmonocicleta->mesaj();
+        pford = &ford;
+        pford->mesaj();
+        psemi = &semi;
+        psemi->mesaj();//din CB
+        pbarca_de_pescuit = &barca_de_pescuit;
+        pbarca_de_pescuit->mesaj();
+
+        // apel prin intermediul unui pointer catre un obiect al clasei de baza
+        cout << "\n";
+        pmonocicleta = &monocicleta;
+        pmonocicleta->mesaj();//Vehicul
+        pmonocicleta = &ford;//upcasting
+        pmonocicleta->mesaj();//Automobil
+        pmonocicleta = &semi;//upcasting
+        pmonocicleta->mesaj();//Vehicul
+        pmonocicleta = &barca_de_pescuit;//upcasting
+        pmonocicleta->mesaj();//Barca
+
+}
+...........................................................
+/*3. Să se scrie un program C++ în care se defineşte o clasă Militar cu o metodă publică virtuală
+sunt_militar() care indică apartenenţa la armată.Derivaţi clasa Militar pentru a crea clasa
+Soldat şi clasa Ofiter.Derivaţi mai departe clasa Ofiter pentru a obtine clasele SubLocotenent,
+Locotenent, Capitan, Maior, Colonel, General.Redefiniti metoda sunt_militar() pentru a
+indica gradul militar pentru fiecare clasa specifica.Instantiati fiecare clasa Soldat,
+Locotenent, ..., General, si apelati metoda sunt_militar().
+EMMA FERENTIU*/
+#include <iostream>
+using namespace std;
+class  Militar {
+public:
+    
+    virtual  void  sunt_militar() {
+        cout << "\nSunt militar!";
+    }
+ 
+};
+class  Locotenent : public  Militar {
+public:
+    void  sunt_militar() {
+        cout << "\nSunt locotenent!";
+    }
+    };
+  class  Capitan : public  Militar {
+  public:
+      void  sunt_militar() {
+          cout << "\nSunt capitan!";
+      }
+      };
+ class  Sublocotenent : public  Militar {
+  public:
+      void  sunt_militar() {
+          cout << "\nSunt sublocotenent!";
+      }
+      };
+ class  Maior : public  Militar {
+ public:
+     void  sunt_militar() {
+         cout << "\nSunt maior!";
+     }
+ };
+int main()
+     {
+         Militar ex1;
+         Locotenent ex2;
+         Capitan ex3;
+         Maior ex4;
+         Sublocotenent ex5;
+         ex1.sunt_militar();
+         ex2.sunt_militar();
+         ex3.sunt_militar();
+         ex4.sunt_militar();
+         ex5.sunt_militar();
+     }
+..........................................................
+/*Declarati o clasa Animal, care va contine o metoda pur virtuala, respira() si doua metode
+virtuale manaca() si doarme().Derivati in mod public o clasa Caine si alta Peste, care vor
+defini metoda pur virtuala, iar clasa Caine va redefini metoda mananca(), iar Peste metoda
+doarme().Instantiati obiecte din cele doua clase si apelati metodele specifice.Definiti apoi un
+tablou de tip Animal, care va contine obiecte din clasele derivate, daca e posibil.Daca nu,
+gasiti o solutie adecvata. EMMA LUCIANA FERENTIU*/
+#include  <iostream>
+
+using  namespace  std;
+
+class  Animalul {
+public:
+    virtual  void  respira() = 0;
+    virtual  void  mananca() {
+        cout << "\nAnimalul mananca!";
+    }
+    virtual  void  doarme() {
+        cout << "\nAnimalul doarme!";
+    }
+};
+
+class  Caine : public  Animalul {
+public:
+    void  respira() {
+        cout << "Catelul respira!";
+    }
+
+    void  mananca() {
+        cout << "\nCatelul mananca!";
+    }
+
+};
+
+class  Peste : public  Animalul {
+public:
+    void  respira() {
+        cout << "\nPestele respira!";
+    }
+
+    void  doarme() {
+        cout << "\nPestele doarme!!";
+    }
+};
+
+int  main() {
+    Caine  ex1;
+    Peste  ex2;
+    ex1.respira();
+    ex1.mananca();
+    ex2.respira();
+    ex2.doarme();
+
+   // Animalul x[100]; nu e posibila instantierea unui obiect din clasa abstracta
+}
+.........................................................................
+//Definiti o clasa abstracta care contine 3 declaratii de metode pur virtuale pentru concatenarea,
+//intreteserea a doua siruri de caractere si inversarea unui sir de caractere primit ca parametru.O
+//subclasa implementeaza corpurile metodelor declarate in clasa de baza.Instantiati clasa
+//derivata si afisati rezultatele aplicarii operatiilor implementate in clasa asupra unor siruri de
+//caractere citite de la tastatura.Examinati eroarea data de incercarea de a instantia clasa de
+//baza.
+//FERENTIU EMMA LUCIANA
+#define  _CRT_SECURE_NO_WARNINGS
+#include  <iostream>
+#include  <cstring>
+
+using  namespace  std;
+#define  DIM  50
+
+class  Baza {
+public:
+    virtual  char* inversarea(char* a) = 0;
+    virtual  char* concatenarea(char* a, char* b) = 0;
+};
+
+class  Derivated : public  Baza
+{
+public:
+
+    char* inversarea(char* a) {
+      
+        _strrev(a);
+        return a;
+    }
+
+    char* concatenarea(char* x, char* y) {
+        char* b = new char[DIM * 2];
+        strcpy(b, x);
+        strcat(b, y);
+        return  b;
+    }
+   
+};
+
+int  main() {
+    Derivated  object;
+    cout << "Introduceti primul sir  ";
+    char* str1 = new  char[DIM];
+    cin >> str1;
+
+    cout << "Introduceti al doilea sir  ";
+    char* str2 = new  char[DIM];
+    cin >> str2;
+
+    cout << "\nSirurile concatenate:  " << object.concatenarea(str1, str2);
+    cout << "\nPrimul sir inversat  " << object.inversarea(str1);
+    cout << "\nAl doilea sir inversat  " << object.inversarea(str2);
+   // Baza ex2; //nu poti instatia clasa abstracta
+   
+
+}
+......................................................................
+/*Scrieţi o aplicaţie C / C++ în care să implementați clasa de bază abstracta PatrulaterAbstract
+avand ca atribute protected patru instante ale clasei Punct(o pereche de coordonate x si y,
+        accesori si mutatori) reprezentand coordonatele colturilor patrulaterului.Declarați două
+        metode membre pur virtuale pentru calculul ariei și perimetrului figurii definite.Derivați clasa
+        PatrulaterConcret care implementeaza metodele abstracte mostenite si care contine o metoda
+        proprie care determina daca patrulaterul este patrat, dreptunghi, patrulater oarecare
+        (convex / concav).În programul principal instanțiați clasa derivata si apelați metodele
+        implementate.Ariile se vor calcula functie de tipul patrulaterului. 
+FERENTIU EMMA LUCIANA*/
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+
+class Punct
+{
+        int x, y;
+public:
+        
+        void setX(int a)
+        {
+                x = a;
+        }
+        void setY(int a)
+        {
+                y = a;
+        }
+        int getX()
+        {
+                return x;
+        }
+        int getY()
+        {
+                return y;
+        }
+};
+class PatrulaterAbstract
+{
+protected:
+        Punct a, b, c, d;
+        int xa, xb, xc, xd, ya, yb, yc, yd;
+        
+public:
+        
+        void setPuncte()
+        {
+                a.setX(5);
+                b.setY(6);
+                a.setY(6);
+                b.setX(8);
+                c.setX(5);
+                d.setY(6);
+                c.setY(6);
+                d.setX(8);
+        }
+
+
+
+        void getPuncte()
+        {
+                xa = a.getX();
+                xb = b.getX();
+                xc = c.getX();
+                xd = d.getX();
+                ya = a.getY();
+                yb = b.getY();
+                yc = c.getY();
+                yd = d.getY();
+        }
+        virtual  int CalculP(int ok) = 0;
+        virtual  int CalculA(int ok) = 0;
+
+
+};
+class PatrulaterConcret : public PatrulaterAbstract
+{ public:
+        float lab, lad, lcb, ldc;
+                void calcul()
+                {
+                        
+                        lab = calcullungime(xa, xb, ya, yb);
+                         lad = calcullungime(xa, xd, ya, yd);
+                         lcb = calcullungime(xc, xb, yc, yb);
+                         ldc = calcullungime(xc, xd, yc, yd);
+                }
+        
+        
+        int DeterminareTip()
+        {
+                int ok = 0;
+                if (lab == lad == lcb == ldc)
+                {
+                        cout << "este patrat";
+                        ok = 1;
+                }
+                else
+                        if (lab == ldc && lad == lcb)
+                        {
+                                cout << "este dreptunghi";
+                                ok = 2;
+                        }
+                        else
+                        {
+                                cout << "este patrulater oarecare";
+                                ok = 3;
+                        }
+                return ok;
+        };
+         int CalculP(int ok)
+         {
+
+                 if(ok==1)
+                return 4 * lab;
+         if (ok == 2)
+                 return 2 * (lab +lad);
+         if(ok==3)
+                 return lab+ldc+lad+lcb;
+        };
+        
+         virtual int CalculA(int ok)
+         { 
+                 if (ok == 1)
+                         return lab * lab;
+                 if (ok == 2)
+                         return lab * lad;
+
+         };
+         float calcullungime(int XA, int XB, int YA, int YB)
+         {
+                 
+                 float distanta = sqrt(((XA - XB) * (XA - XB)) + ((YA - YB) * (YA - YB)));
+                 return distanta;
+         };
+
+};
+
+int main()
+{
+        PatrulaterConcret op;
+        op.setPuncte();
+        op.getPuncte();
+        op.calcul();
+        int ok=op.DeterminareTip();
+        cout<<"\naria este "<<op.CalculA(ok);
+        cout<<"\nperimetrul este "<<op.CalculP(ok);
+
+        
+}

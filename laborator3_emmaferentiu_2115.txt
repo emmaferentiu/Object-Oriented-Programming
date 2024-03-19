@@ -1,0 +1,389 @@
+//11. Citiți de la intrarea standard un tablou unidimensional de maxim 20 de valori întregi.Folosind mecanismul de
+//căutare binară, determinați dacă o nouă valoare, a, introdusă de la tastatură există în șir.Dacă da, determinați
+//toți factorii primi ai acestei valori pe care îi veți afișa pe ecran.
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include<time.h>
+using namespace std;
+void descompunere(int n, int f);
+int CautareBinararecursiv(int x, int V[20], int st, int dr);
+
+int main()
+{
+    
+    int v[200], i, n;
+    cout << "introduceti nr de numere";
+    cin >> n;
+    cout << "\nintroduceti numerele";
+    for (i = 0; i < n; i++)
+        cin >> v[i];
+
+   
+   int c;
+   cout << "introduceti valoarea cautata";
+   cin >> c;
+   cout << "valoarea cautata este:" << c;
+  
+    int d = CautareBinararecursiv(c, v, 0, n-1); //idem ca in cazul variantei recursive
+    if (d > -1)
+    {
+        cout << "factorii primi ai numarului gasit sunt/este  ";
+        descompunere(c, 2);
+    }
+    else
+        cout << "nu exista in sir numarul";
+       
+}
+
+
+
+int CautareBinararecursiv(int x, int V[20], int st, int dr)
+{
+    if (st > dr)
+        return -1;
+    else
+    {
+        int M = (st + dr) / 2;
+        if (x == V[M])
+            return M;
+        if (x < V[M])
+            return CautareBinararecursiv(x,V,st, M - 1);
+        else
+            return CautareBinararecursiv(x,V,M + 1, dr);
+    }
+}
+void descompunere(int n, int f)
+{
+    if (n >= f)
+    {
+        if (n % f == 0)
+        {
+            cout << f << " ";
+            descompunere(n / f, f);
+        }
+        else
+            descompunere(n, f + 1);
+    }
+}
+....................................................................................................
+//12. Folosind un fișier care conține numere reale ordonate, căutați o valoare reală a introdusă de la tastatură în
+//cadrul șirului, folosind algoritmul de căutare binară iterativ, recursiv și funcția de bibliotecă bsearch().Afișați
+//șirul citit, valoarea a și poziția folosind cei trei algoritmi specificați.
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include<time.h>
+using namespace std;
+int comparare(const void* a, const void* b);
+int CautareBinara(int x, int V[200], int st, int dr);
+int CautareBinararecursiv(int x, int V[200], int st, int dr);
+
+int main()
+{
+    
+        int v[200], i = 0;
+     FILE* fisintrare;
+     int a;
+     int f;
+     int d;
+   if ((a = fopen_s(&fisintrare, "file.txt", "r") != 0)) {
+       printf("Eroare la deschiderea fisierul de intrare !");
+
+   }
+   i = 0;
+   cout << "sirul este:";
+   while (fscanf(fisintrare, "%d", &f) != EOF) {
+       d = int(f);
+       v[i] = d;
+       
+       cout << v[i] << " ";
+       i++;
+   }
+   fclose(fisintrare);
+   int c;
+   cout << "introduceti valoarea cautata";
+   cin >> c;
+   cout << "valoarea cautata este:" << c;
+   int *item;
+   item = (int*)bsearch(&c, v, 5, sizeof(int), comparare); //consider 5 numere in fisier
+   if (item != NULL) {
+       printf("element gasit");  //varianta cu bsearch
+       
+   }
+   else {
+       printf("elementul nu a fost gasit", *item);
+   }
+    d = CautareBinara(c, v, 0, 4); //idem ca in cazul variantei recursive
+   if (d > -1)
+       cout << "numarul exista in sir si se gaseste pe pozitia " << d;
+   else
+       cout << "numarul nu exista in sir";
+}
+
+
+int comparare(const void* a, const void* b) {
+    return (*(int*)a - *(int*)b);
+}
+int CautareBinara(int x, int V[200], int st, int dr)
+{
+    int Sol = -1;
+    while (st <= dr)
+    {
+        int M = (st + dr) / 2;
+        if (V[M] == x)
+        {
+            Sol = M;
+            break;
+        }
+        if (V[M] > x)
+            dr = M - 1;
+        if (V[M] < x)
+            st= M + 1;
+    }
+    return Sol;
+}
+int CautareBinararecursiv(int x, int V[200], int st, int dr)
+{
+    if (st > dr)
+        return -1;
+    else
+    {
+        int M = (st + dr) / 2;
+        if (x == V[M])
+            return M;
+        if (x < V[M])
+            return CautareBinararecursiv(x,V,st, M - 1);
+        else
+            return CautareBinararecursiv(x,V,M + 1, dr);
+    }
+}
+..................................................................................................
+//6.Creaţi un fişier în care stocaţi un şir de numere întregi, generate in mod aleator.Preluaţi prin program aceste
+//valori.Folosiţi metoda divide et impera pentru a determina minimul şi maximul din şir şi afisaţi rezultatele pe
+//ecran.Actualizaţi fişierul iniţial adăugând aceste două valori.
+
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include<time.h>
+using namespace std;
+int minim(int v[200], int stanga, int dreapta);
+int maxim(int v[200], int stanga, int dreapta);
+
+int main()
+{
+    srand(time(NULL));
+    int v[200], i = 0;
+     FILE* fisintrare;
+     int a;
+     int f;
+     int d;
+     if ((a = fopen_s(&fisintrare, "file.txt", "w") != 0)) {
+         printf("Eroare la deschiderea fisierului!");
+
+     }
+     for (i = 0; i < 10; i++)
+     {
+         int n = rand()%100;
+         fprintf(fisintrare, "%d ", n);
+     }
+     fclose(fisintrare);
+   if ((a = fopen_s(&fisintrare, "file.txt", "r") != 0)) {
+       printf("Eroare la deschiderea fisierul de intrare !");
+
+   }
+   i = 0;
+   while (fscanf(fisintrare, "%d", &f) != EOF) {
+       d = int(f);
+       v[i] = d;
+       i++;
+   }
+   fclose(fisintrare);
+
+   if ((a = fopen_s(&fisintrare, "file.txt", "w") != 0)) {
+       printf("Eroare la deschiderea fisierului!");
+
+   }
+   cout << "cel mai mare numar generat random este " << maxim(v, 0, i - 1);
+   cout << "\ncel mai mic numar generat random este " << minim(v, 0, i - 1);
+
+       fprintf(fisintrare, "%d ", minim(v, 0, i-1));
+       fprintf(fisintrare, "%d ", maxim(v, 0, i-1));
+
+   
+
+   fclose(fisintrare);
+
+}
+
+int minim(int v[200], int stanga, int dreapta)
+{
+    if (stanga == dreapta)
+        return v[stanga]; 
+    else
+    {
+        int mijloc = (stanga + dreapta) / 2; 
+        int unu = minim(v, stanga, mijloc); 
+        int doi = minim(v, mijloc + 1, dreapta); 
+        if (unu > doi)
+            return doi;
+        else
+            return unu;
+    }
+}
+int maxim(int v[200], int stanga, int dreapta)
+{
+    if (stanga == dreapta)
+        return v[stanga];
+    else
+    {
+        int mijloc = (stanga + dreapta) / 2;
+        int unu = maxim(v, stanga, mijloc);
+        int doi =maxim(v, mijloc + 1, dreapta);
+        if (unu < doi)
+            return doi;
+        else
+            return unu;
+    }
+}
+............................................................................
+//7. Scrieţi o aplicaţie care determină c.m.m.d.c.dintr - un tablou unidimensional de numere întregi(max. 2000 de
+ //   valori), utilizând metoda divide et impera.Elementele tabloului se pot citi de la tastatură sau dintr - un fisier.
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+using namespace std;
+int cmmdcdivideetimpera(int v[200], int stanga, int dreapta);
+int cmmdc(int a, int b);
+int main()
+{
+    int v[200], i, n;
+    cout << "introduceti nr de valori din vector ";
+    cin >> n;
+    for (i = 0; i < n; i++)
+    {
+        cout << "\nintroduceti o valoare: ";
+        cin >> v[i];
+    }
+   cout<<"cmmdc al numerelor din vector este "<<cmmdcdivideetimpera(v, 0, n - 1);
+}
+int cmmdcdivideetimpera(int v[200], int stanga, int dreapta)
+{
+    if (stanga == dreapta)
+        return v[stanga]; 
+    else
+    {
+        int mijloc = (stanga + dreapta) / 2; 
+        int unu = cmmdcdivideetimpera(v, stanga, mijloc); 
+        int doi = cmmdcdivideetimpera(v, mijloc + 1, dreapta); 
+        return cmmdc(unu, doi);
+    }
+}
+int cmmdc(int a, int b)
+{
+        int r;
+        r = a % b;
+        if (r)
+            return cmmdc(b, r);
+        else
+            return b;
+    
+}
+.............................................................................
+//sa se calculeze o integrala cu ajutorul metodei trapezelor, astfel încât inălţimea fiecărui trapez a cărui arie
+ //   se însumează să fie mai mică decât ε = 0.0001.Aria trapezului cu vârfurile în punctele(a, 0), (b, 0), (a, f(a)) şi
+  //  (b, f(b)) este(b - a)* (f(a) + f(b)) / 2, iar f(x) = 1 / (1 + x2
+  //      ).Se citesc de la tastatură numerele reale a şi b, a≤b.Utilizaţi
+  //  metoda divide et impera.
+
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include<time.h>
+using namespace std;
+
+double calcul(double x);
+double integrala(float a, float b);
+
+int main()
+{
+    
+    printf("\n Introduceti capetul de sus de integrare:");
+    float b, a;
+    cin >> b;
+    printf("\n Introduceti capetul de jos de integrare:");
+    
+    cin >> a;
+
+    printf("\n Rezultatul  aproximativ al integralei folosind metoda trapezelor: %f", integrala(a, b));
+}
+
+float calcul(float x)
+{
+    return 1 / (1 + x * x);
+}
+double integrala(float a, float b)
+{
+    float unu, doi, m;
+    if ((b - a) < 0.0001)
+        return ((calcul(a) + calcul(b)) * (b - a)) / 2;
+    else
+    {
+        m = (b + a) / 2;
+        unu = integrala(a, m);
+        doi = integrala(m, b);
+        return  unu + doi;
+    }
+}
+...............................................................................................
+//Să se scrie o aplicație C / C++ care să genereze aleator maxim 10 valori întregi, ce vor fi memorate într - un
+//tablou unidimensional.Să se verifice dacă o altă valoare generată aleator aparține acestui tablou, utilizând
+//funcția _lsearch().
+
+//EMMA LUCIANA FERENTIU 2115
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include<time.h>
+using namespace std;
+
+int comparare(const void* a, const void* b);
+int main()
+{
+    srand(time(NULL));
+    int v[200], i, n;
+    n = 10;
+    for (i = 0; i < n; i++)
+    {
+        v[i] = rand() % 100;
+
+    }
+        int c = rand() % 100;
+        int aux;
+        aux = (int)_lsearch(&c, v, (unsigned*)&n, sizeof(int),comparare);
+        if (n == 10)
+        {
+            cout << "valoarea exista in sir";
+        }
+        else
+            cout << "valoarea nu exista in sir si a fost adaugata";
+
+}
+
+
+    int comparare(const void* a, const void* b) {
+        return (*(int*)a - *(int*)b);
+    }
+............................................................................................

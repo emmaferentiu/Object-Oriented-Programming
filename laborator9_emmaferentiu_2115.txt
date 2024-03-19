@@ -1,0 +1,268 @@
+//1.Să se scrie un program C/C++ care citeşte elementele a doua tablouri unidimensionale de numere
+//întregi şi afişează produsul scalar al acestora. Se va folosi o functie care preia elementele de la
+//tastatură şi o altă funcţie, care calculează produsul scalar. Ambele vor utiliza pointeri. Citirea
+//numărului de elemente ale tabloului şi afişarea rezultatului se va face în funcţia main().
+int a[100], b[100];
+void cit(int* a, int* b, int x, int y);
+void produsulscalar(int* a, int* b, int x, int y);
+int main() {
+        int m, n;
+        printf("Dati dimensiunile celor doua tablouri: ");
+        scanf("%d%d", &m, &n);
+        cit(a, b, m, n);
+        produsulscalar(a, b, m, n);
+}
+void cit(int a[50], int b[50], int m, int n) {
+        printf("Elementele tablourilor sunt:");
+        for (int i = 0; i < n; i++) {
+                printf("a[%d]=", i);
+                scanf("%d", a + i);
+        }
+        for (int j = 0; j < m; j++) {
+                printf("b[%d]=", j);
+                scanf("%d", b + j);
+        }
+}
+void produsulscalar(int x[50], int y[50], int m, int n) {
+        int s = 0;
+        if (m < n) {
+                for (int i = 0; i < m; i++) {
+                        s = s + *(x + i) * *(y + i);
+                }
+        }
+        else {
+                for (int i = 0; i < n; i++) {
+                        s = s + *(x + i) * *(y + i);
+                }
+        }
+        printf("Produsul scalar este %d", s);
+}
+//2.Să se scrie o aplicaţie C/C++ în care se generează aleator 20 de numere întregi cu valori mai mici
+//decât 50 (Folositi srand(), rand() si operatorul %). Să se scrie o funcţie care elimină din tabloul
+//unidimensional creat numerele impare. Funcţia va utiliza pointeri. Afişati în main() tabloul iniţial şi
+//cel obţinut după eliminarea elementelor impare.
+//Ferentiu Emma-Luciana
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <cstring>
+#include <cstdlib>
+#include <ctime>
+void eliminare(int* tablou);
+int main() {
+        int tablou[20];
+        int j = -1, i;
+        srand((unsigned)time(0)); //functia srand ofera un punct de pornire pentru generare iar time(0) ne asigura ca vom primi valori noi de fiecare data
+        int n;
+        for ( i = 0; i < 20; i++) {
+                n = (rand() % 50) + 1; // generam numere cu valori mai mici decat 50
+                tablou[++j] = n;
+        }
+
+        printf("Tabloul initial este: ");
+
+        for ( i = 0; i < 20; i++)
+        {
+                printf("%d ", *(tablou + i));
+        }
+
+        printf("\nTabloul dupa elimiarea cifrelor impare este: ");
+        eliminare(tablou);
+}
+void eliminare(int* x ) {
+        int r = 20, j;
+        for (int i = 0; i < r; i++) {
+                if (*(x + i) % 2 != 0) {
+                        r = r - 1;
+                        for (j = i; j < r ; j++)
+                                *(x + j) = *(x + j + 1);
+                        
+                        i = i - 1;
+                }
+        }
+
+        for (int i = 0; i < r; i++)
+        {
+                printf("%d ", *( x + i));
+        }
+}
+//3. Să se scrie un program C/C++ în care se citesc de la tastatură numere reale, ce vor fi stocate într-un
+//tablou unidimensional. Să se scrie o funcţie care copiază într-un alt tablou toate valorile din primul
+//tablou, care sunt mai mari decât valoarea medie a numerelor preluate. Se vor folosi pointeri şi se vor
+//afişa în main() valorile din cele două tablouri.
+//Ferentiu Emma-Luciana
+//programul citeste un sir si construieste un alt tablou cu elementele ce sunt mai mari decat valoareamedie a primului sir
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <cstring>
+
+void cit(float* a, int n);
+void transferare(float* a, float* b, int n, int* m, float valoareamedie);
+
+int main() {
+        float a[50], b[50], s = 0;
+        int n, m;
+        printf("introduceti dimensiunea sirului initial ");
+        scanf("%d", &n);
+        printf("Dati sirul: ");
+        cit(a, n);
+        printf("\nTabloul initial: ");
+        for (int i = 0; i < n; i++) {
+                printf("%0.2f ", a[i]);
+                s += a[i];
+        }
+        float valoareamedie = s / n;
+        transferare(a, b, n, &m, valoareamedie);
+        printf("\nAl doilea tablou ");
+        for (int i = 0; i < m; i++) 
+        {
+                printf("%0.2f ", b[i]);
+        }
+
+}
+
+void cit(float* a, int n) {
+        for (int i = 0; i < n; i++) {
+                printf("a[%d]= ", i);
+                scanf("%f", a + i);
+        }
+}
+
+void transferare(float* a, float* b, int n, int* m, float val_med) {
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+                if (*(a + i) > val_med) {
+                        *(b + j) = *(a + i);
+                        j++;
+                }
+        }
+        *m = j;
+}
+//4. Să se scrie un program care citeşte de la tastatură un şir de caractere, apoi elimină din şir caracterele
+//care se repetă şi afişează în final şirul obţinut, folosind pointeri.
+//Emma Luciana Ferentiu
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+void fct(char* p);
+
+
+int main() {
+    int i;
+    char p[20];
+    printf("\nintroduceti sir: ");
+    scanf("%s", p);
+    fct(p);
+    printf("\nSirul de caractere rezultat: ");
+    for (i = 0; i < strlen(p); i++)
+    {
+        printf("%c", *(p + i));
+    }
+    printf("\n");
+
+    return 0;
+}
+void fct(char* p)
+{
+    int i, j, k;
+    for (i = 0; i < strlen(p) - 1; i++)
+    {
+        for (j = i + 1; j < strlen(p); j++)
+        {
+            while (*(p + i) == *(p + j))
+            {
+                for (k = j; k < strlen(p); k++)
+                {
+                    *(p + k) = *(p + k + 1);
+                }
+
+            }
+        }
+    }
+}
+//5. Să se scrie un program care citeşte de la tastatură două şiruri de caractere şi afişează numărul de
+//caractere prin care ele diferă (adică numărul de caractere care există în primul şi nu există în al
+//doilea + numărul de caractere care există în al doilea şi nu există în primul). Folosiţi pointeri pentru
+//accesul la elementele tablourilor.
+//Ferentiu Emma-Luciana
+//caracterele diferite din 2 siruri
+//programul functioneaza ideal doar in cazul in care in siruri a nu se repeta caracterele
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <cstring>
+#include <iostream>
+using namespace std;
+int sim(char* x, char* y);
+int dif(char* x, char* y);
+int main() {
+        int fr[1000];
+        
+        char a[100], b[100];
+        printf("Introduceti primul sir de caractere: ");
+        scanf("%s", a);
+        printf("Introduceti al doilea sir de caractere: ");
+        scanf("%s", b);
+        int d1 = strlen(a);
+        int d2 = strlen(b);
+        int numarula = d1 - sim(a, b);
+        cout << sim(a, b);
+        int numarulb = d2 - sim(b, a);        
+        int sum = numarulb+numarula;
+        printf("\nNumarul de caractere diferite  este: %d", sum);
+}
+int sim(char* x, char* y) {
+        int dim1 = strlen(x);
+        int dim2 = strlen(y);
+        int nr = 0;
+        
+        for (int i = 0; i < dim1; i++) {
+                for (int j = 0; j < dim2; j++) {
+                        if (*(x + i) == *(y + j))
+                        {
+                                
+                                        nr++;
+                                        i++;
+                                
+                        }
+                }
+        }
+
+
+        
+
+        return nr;
+}
+
+//6. Să se scrie o aplicaţie C/C++ care citeşte de la tastatură un şir de caractere. Să se scrie o funcţie care
+afişează caracterele ce compun şirul şi numărul de apariţii ale fiecăruia, folosind pointeri.
+//Ferentiu Emma-Luciana
+//de cate ori apare fiecare caracter
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <cstring>
+
+
+void aparitii(char* c);
+
+int main() {
+        char c[100];
+        printf("Dati sirul de carcatere: ");
+        scanf("%s", c);
+        aparitii(c);
+}
+
+void aparitii(char* c) {
+        int f[100] = {0}; //folosim un  vector de frecventa pentru a contoriza numarul de aparitii
+        for (int i = 0; i < strlen(c); i++) {
+                for (int j = 0; j < strlen(c); j++) {
+                        if (*(c + i) == *(c + j)) {
+                                f[i]++;
+                        }
+                }
+                printf("\nCarcaterul %c apare de %d ori", *(c + i), f[i]);
+
+        }
+
+}
